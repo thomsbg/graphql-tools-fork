@@ -44,7 +44,9 @@ export default function filterSchema({
           ? filterObjectFields(type, fieldFilter)
           : null,
       [VisitSchemaKind.INTERFACE_TYPE]: (type: GraphQLInterfaceType) =>
-        typeFilter(type.name, type) ? undefined : null,
+        typeFilter(type.name, type)
+          ? filterInterfaceFields(type, fieldFilter)
+          : null,
       [VisitSchemaKind.UNION_TYPE]: (type: GraphQLUnionType) =>
         typeFilter(type.name, type) ? undefined : null,
       [VisitSchemaKind.INPUT_OBJECT_TYPE]: (type: GraphQLInputObjectType) =>
@@ -86,4 +88,17 @@ function filterObjectFields(
     }
   });
   return new GraphQLObjectType(config);
+}
+
+function filterInterfaceFields(
+  type: GraphQLInterfaceType,
+  fieldFilter: FieldFilter
+): GraphQLInterfaceType {
+  const config = toConfig(type);
+  Object.keys(config.fields).forEach(fieldName => {
+    if (!fieldFilter(type.name, fieldName)) {
+      delete config.fields[fieldName];
+    }
+  });
+  return new GraphQLInterfaceType(config);
 }
