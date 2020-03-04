@@ -4,6 +4,6 @@ import { Source, buildASTSchema, parse, BuildSchemaOptions } from 'graphql';
 export function buildSchema(
   ast: string | Source,
   buildSchemaOptions: BuildSchemaOptions,
-) {
+): any {
   return buildASTSchema(parse(ast), buildSchemaOptions);
 }

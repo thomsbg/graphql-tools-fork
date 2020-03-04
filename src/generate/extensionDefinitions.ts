@@ -2,7 +2,7 @@ import { DocumentNode, DefinitionNode, Kind } from 'graphql';
 
 import { graphqlVersion } from '../utils';
 
-export function extractExtensionDefinitions(ast: DocumentNode) {
+export function extractExtensionDefinitions(ast: DocumentNode): any {
   const extensionDefs = ast.definitions.filter(
     (def: DefinitionNode) =>
       def.kind === Kind.OBJECT_TYPE_EXTENSION ||
@@ -20,7 +20,7 @@ export function extractExtensionDefinitions(ast: DocumentNode) {
   };
 }
 
-export function filterExtensionDefinitions(ast: DocumentNode) {
+export function filterExtensionDefinitions(ast: DocumentNode): any {
   const extensionDefs = ast.definitions.filter(
     (def: DefinitionNode) =>
       def.kind !== Kind.OBJECT_TYPE_EXTENSION &&
